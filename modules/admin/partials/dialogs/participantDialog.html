@@ -13,9 +13,15 @@
         </div>
         <div>
             <md-radio-group ng-model="data.gender">
-                <md-radio-button value="w" class="md-primary">weiblich</md-radio-button>
-                <md-radio-button value="m" class="md-primary">männlich</md-radio-button>
+                <md-radio-button value="sie/ihr" class="md-primary">sie/ihr</md-radio-button>
+                <md-radio-button value="er/ihm" class="md-primary">er/ihm</md-radio-button>
+                <md-radio-button value="they/them" class="md-primary">they/them</md-radio-button>
+                <md-radio-button value="" class="md-primary">keine Pronomen</md-radio-button>
             </md-radio-group>
+
+            <md-input-container>
+                <input placeholder="Pronomen" ng-model="data.gender">
+            </md-input-container>
         </div>
     </md-dialog-content>
     <md-dialog-actions>
