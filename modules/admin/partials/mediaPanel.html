@@ -26,9 +26,13 @@
                             md-component-id="groupsSidenav"
                             md-is-locked-open="true"
                             md-whiteframe="4">
-                        <md-content layout-padding>
-                            <md-button ng-disabled="!event.view.customText" ng-click="setScreen('customText')">
+                        <md-content layout-padding flex layout="column">
+                            <md-button ng-disabled="!event.view.customText" ng-click="setScreen('customText')" class="text-left">
                                 Anzeigen
+                            </md-button>
+
+                            <md-button ng-click="event.view.customText = ''; event.view.customTextSubline = ''; setScreen('customText')" class="text-left">
+                                Reset
                             </md-button>
                         </md-content>
                     </md-sidenav>
