@@ -1,0 +1,46 @@
+{
+  "name": "scoreboard_poetry_slam",
+  "version": "1.0.0",
+  "description": "Poetry Slam Scoreboard",
+  "main": "src/electron.js",
+  "repository": "git@github.com:Pandibrudi/scoreboard_poetry_slam.git",
+  "author": "Gregor <gluastoned@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "bin": "src/server.js",
+  "build": {
+    "appId": "eu.fomp.scoreboard_poetry_slam",
+    "icon": "assets/angela_256.png"
+  },
+  "pkg": {
+    "assets": [
+      "public/**/*"
+    ],
+    "scripts": [
+      "src/server.js"
+    ],
+    "targets": [
+      "node16-win"
+    ],
+    "outputPath": "dist"
+  },
+  "scripts": {
+    "start": "yarn start:server",
+    "start:server": "node src/server.js",
+    "start:electron": "electron .",
+    "build": "yarn build:server && yarn build:electron",
+    "build:server": "pkg .",
+    "build:electron": "electron-builder build --win portable"
+  },
+  "dependencies": {
+    "@fastify/static": "^6.5.0",
+    "@fontsource/roboto": "^4.5.8",
+    "fastify": "^4.9.2",
+    "open": "^8.4.0"
+  },
+  "devDependencies": {
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
+    "pkg": "^5.8.0"
+  }
+}
