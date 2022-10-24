@@ -1,7 +1,6 @@
-const { app, BrowserWindow, protocol, screen } = require('electron');
+const { app, BrowserWindow, dialog, screen } = require('electron');
 const { fastify } = require('fastify');
 const static = require('@fastify/static');
-const url = require('url');
 const path = require('path');
 
 let adminWindow;
@@ -9,13 +8,16 @@ let presentationWindow;
 
 const createAdminWindow = (display) => {
   const config = {
-    width: 800,
-    height: 600,
     x: display !== undefined ? display.bounds.x : 0,
     y: display !== undefined ? display.bounds.y : 0,
+    width: 800,
+    height: 600,
     frame: true,
+    closable: true,
+    fullscreen: false,
     autoHideMenuBar: true,
-    title: 'Slamware Admin',
+    backgroundColor: '#000000',
+    title: 'Slam22 Admin',
     icon: path.join(__dirname, '../assets/angela_64.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -33,18 +35,39 @@ const createAdminWindow = (display) => {
   // adminWindow.webContents.openDevTools();
   adminWindow.loadURL(`http://localhost:4200/admin.html`);
 
+  adminWindow.on('close', (event) => {
+    const choice = dialog.showMessageBoxSync(adminWindow, {
+      type: 'question',
+      buttons: ['Cancel', 'Close'],
+      title: 'Quit Slam22 Scoreboard?',
+      message: 'This will close Admin and Presentation windows.',
+      defaultId: 0,
+      cancelId: 0,
+    });
+
+    if (choice === 0) {
+      event.preventDefault();
+    }
+  });
+
   adminWindow.on('closed', () => {
     adminWindow = null;
+    app.exit();
   });
 };
 
 const createPresentationWindow = (display) => {
   const config = {
+    x: display !== undefined ? display.bounds.x : 0,
+    y: display !== undefined ? display.bounds.y : 0,
     width: 800,
     height: 600,
     frame: true,
+    closable: false,
+    fullscreen: display !== undefined,
     autoHideMenuBar: true,
-    title: 'Slamware Presentation',
+    backgroundColor: '#000000',
+    title: 'Slam22 Presentation',
     icon: path.join(__dirname, '../assets/angela_64.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -73,22 +96,19 @@ const onAppReady = async () => {
   try {
     await server.listen({ port: 4200, host: '0.0.0.0' });
 
-    let primaryDisplay = screen.getPrimaryDisplay();
-    let displays = screen.getAllDisplays();
+    const allDisplays = screen.getAllDisplays();
+    const primaryDisplay = screen.getPrimaryDisplay();
 
-    // console.log('primary display', primaryDisplay);
     createAdminWindow(primaryDisplay);
 
-    let secondDisplay;
-
-    if (displays.length > 1) {
-      secondDisplay = displays.find((display) => {
-        return display.id != primaryDisplay.id;
+    let secondaryDisplay;
+    if (allDisplays.length > 1) {
+      secondaryDisplay = allDisplays.find((display) => {
+        return display.id !== primaryDisplay.id;
       });
     }
 
-    // console.log('presentation display', secondDisplay ?? primaryDisplay);
-    createPresentationWindow(secondDisplay ?? primaryDisplay);
+    createPresentationWindow(secondaryDisplay);
   } catch (error) {
     // console.log(error);
   }
