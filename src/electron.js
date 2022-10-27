@@ -32,6 +32,7 @@ const createAdminWindow = (display) => {
   });
 
   adminWindow.maximize();
+  adminWindow.webContents.setAudioMuted(false);
   // adminWindow.webContents.openDevTools();
   adminWindow.loadURL(`http://localhost:4200/admin.html`);
 
@@ -81,6 +82,7 @@ const createPresentationWindow = (display) => {
   });
 
   presentationWindow.maximize();
+  presentationWindow.webContents.setAudioMuted(false);
   // presentationWindow.webContents.openDevTools();
   presentationWindow.loadURL(`http://localhost:4200/index.html`);
 
