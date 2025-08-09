@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test Admin - Poetry Slam</title>
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Black.css" />
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Light.css" />
+    <link rel="stylesheet" href="admin.min.css" />
+    
+    <style>
+      body {
+        margin: 20px;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      .test-info {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      .error-display {
+        background: #ffebee;
+        color: #c62828;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+        font-family: monospace;
+      }
+      .success-display {
+        background: #e8f5e8;
+        color: #2e7d32;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="test-info">
+      <h1>🔧 Admin UI Diagnostic Test</h1>
+      <p>This page tests if the admin resources are loading correctly.</p>
+    </div>
+
+    <div id="loading-status">
+      <h2>📋 Loading Status</h2>
+      <div id="css-status">CSS: <span id="css-result">Checking...</span></div>
+      <div id="js-status">JavaScript: <span id="js-result">Checking...</span></div>
+      <div id="angular-status">AngularJS: <span id="angular-result">Checking...</span></div>
+    </div>
+
+    <div id="error-log">
+      <h2>🐛 Error Log</h2>
+      <div id="errors"></div>
+    </div>
+
+    <div id="angular-test" ng-app="psadmin" style="display: none;">
+      <div ng-controller="TestController">
+        <div class="success-display">
+          ✅ AngularJS is working! Message: {{testMessage}}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Capture all errors
+      window.addEventListener('error', function(e) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-display';
+        errorDiv.innerHTML = `
+          <strong>Error:</strong> ${e.message}<br>
+          <strong>File:</strong> ${e.filename}<br>
+          <strong>Line:</strong> ${e.lineno}
+        `;
+        document.getElementById('errors').appendChild(errorDiv);
+      });
+
+      // Check CSS loading
+      function checkCSS() {
+        const testEl = document.createElement('div');
+        testEl.className = 'md-button';
+        document.body.appendChild(testEl);
+        const styles = window.getComputedStyle(testEl);
+        document.body.removeChild(testEl);
+        
+        const result = styles.getPropertyValue('position') ? '✅ Loaded' : '❌ Failed';
+        document.getElementById('css-result').textContent = result;
+      }
+
+      // Test function to run after everything loads
+      function runTests() {
+        checkCSS();
+        
+        // Check if Angular is available
+        if (typeof angular !== 'undefined') {
+          document.getElementById('angular-result').textContent = '✅ Available';
+          document.getElementById('angular-test').style.display = 'block';
+          
+          // Try to bootstrap Angular
+          try {
+            angular.module('psadmin').controller('TestController', function($scope) {
+              $scope.testMessage = 'Admin module loaded successfully!';
+            });
+          } catch(e) {
+            document.getElementById('angular-result').textContent = '❌ Module error: ' + e.message;
+          }
+        } else {
+          document.getElementById('angular-result').textContent = '❌ Not loaded';
+        }
+      }
+
+      // Check JS loading
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(runTests, 1000); // Give JS time to load
+      });
+    </script>
+
+    <script src="admin.min.js"></script>
+  </body>
+</html>

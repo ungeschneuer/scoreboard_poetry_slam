@@ -2,14 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Temporarily relaxed CSP for debugging -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ws: wss:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ws: wss:;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Poetry Slam Admin</title>
-    <link rel="stylesheet" href="./fonts/SourceSansPro-Black.css" />
-    <link rel="stylesheet" href="./fonts/SourceSansPro-Light.css" />
-    <link rel="stylesheet" href="admin.min.css" />
-
-    <script src="admin.min.js"></script>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./fonts/SourceSansPro-Black.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="./fonts/Roboto-400.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Critical CSS will be injected here by webpack -->
   </head>
 
   <body layout="row" ng-app="psadmin">
@@ -17,7 +18,7 @@
 
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
       <a href="admin.html#/">
-        <img src="./media/logo/logo.png" class="sidebar-logo" />
+        <img src="./media/logo/logo.png" class="sidebar-logo" alt="Poetry Slam Logo" />
       </a>
 
       <md-content class="sidenav-menu">
@@ -42,11 +43,13 @@
         <sidenav-entry path="'/AdmistrationInterface'" label="'Administration'"></sidenav-entry>
       </md-content>
 
-      <iframe src="./index.html?embedded=1" class="preview-frame"></iframe>
+      <iframe src="./index.html?embedded=1" class="preview-frame" title="Presentation Preview"></iframe>
     </md-sidenav>
 
     <md-content flex class="md-whiteframe-z2">
       <section class="content-container" ng-view></section>
     </md-content>
+
+    <!-- Admin JavaScript bundles will be injected here by webpack -->
   </body>
 </html>

@@ -21,8 +21,12 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "electron .",
-    "build": "electron-builder"
+    "dev": "nodemon --exec electron .",
+    "build": "electron-builder",
+    "optimize": "node optimize-bundles.js",
+    "analyze": "node optimize-bundles.js",
+    "clean": "rm -rf dist public/optimized",
+    "serve": "node src/server.js"
   },
   "dependencies": {
     "@fastify/static": "^6.5.0",
@@ -32,6 +36,7 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
     "babel-loader": "^10.0.0",
+    "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^9.2.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",

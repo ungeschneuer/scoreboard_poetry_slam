@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Poetry Slam Admin (Debug)</title>
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Black.css" />
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Light.css" />
+    <link rel="stylesheet" href="admin.min.css" />
+
+    <script src="admin.min.js"></script>
+    
+    <script>
+      // Debug script to check what's happening
+      console.log('🔍 Debug: HTML loaded');
+      
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('🔍 Debug: DOM loaded');
+        console.log('🔍 Debug: Angular available?', typeof angular !== 'undefined');
+        
+        if (typeof angular !== 'undefined') {
+          try {
+            console.log('🔍 Debug: Trying to get psadmin module...');
+            const module = angular.module('psadmin');
+            console.log('🔍 Debug: psadmin module found:', module);
+            
+            // Check if bootstrap happened
+            setTimeout(() => {
+              const element = document.querySelector('[ng-app="psadmin"]');
+              console.log('🔍 Debug: Bootstrap element:', element);
+              
+              if (element && angular.element(element).scope()) {
+                console.log('✅ Angular bootstrapped successfully');
+              } else {
+                console.log('❌ Angular not bootstrapped');
+                
+                // Try manual bootstrap
+                console.log('🔧 Attempting manual bootstrap...');
+                try {
+                  angular.bootstrap(document.querySelector('[ng-app="psadmin"]'), ['psadmin']);
+                  console.log('✅ Manual bootstrap successful');
+                } catch(e) {
+                  console.error('❌ Manual bootstrap failed:', e);
+                }
+              }
+            }, 2000);
+            
+          } catch(e) {
+            console.error('❌ Error with psadmin module:', e);
+          }
+        }
+      });
+      
+      // Catch all errors
+      window.addEventListener('error', function(e) {
+        console.error('🚨 Global error:', e.message, 'at', e.filename + ':' + e.lineno);
+      });
+    </script>
+  </head>
+
+  <body layout="row" ng-app="psadmin">
+    <div style="position: fixed; top: 10px; right: 10px; background: #333; color: white; padding: 10px; border-radius: 4px; z-index: 9999; font-family: monospace; font-size: 12px;">
+      Debug Mode Active
+    </div>
+    
+    <background-audio audio-shortcuts></background-audio>
+
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+      <a href="admin.html#/">
+        <img src="./media/logo/logo.png" class="sidebar-logo" alt="Logo" />
+      </a>
+
+      <md-content class="sidenav-menu">
+        <sidenav-entry path="'/'" label="'Status'"></sidenav-entry>
+        <sidenav-entry path="'/presentation'" label="'Präsentation'"></sidenav-entry>
+        <sidenav-entry path="'/participants'" label="'Poeten'"></sidenav-entry>
+        <sidenav-entry path="'/competitions'" label="'Wettbewerbe'"></sidenav-entry>
+        <div layout="column" class="sidenav-sublevel">
+          <div layout="column" ng-repeat="competition in event.competitions">
+            <sidenav-entry path="'/competitions/' + competition.id + '/groups'" label="competition.name"></sidenav-entry>
+            <div layout="column" class="sidenav-sublevel" ng-show="competition.groups">
+              <sidenav-entry
+                ng-repeat="group in competition.groups"
+                path="'/competitions/' + competition.id + '/groups/' + group.id"
+                label="group.name"
+              ></sidenav-entry>
+            </div>
+          </div>
+        </div>
+        <sidenav-entry path="'/videos'" label="'Videos'"></sidenav-entry>
+        <sidenav-entry path="'/sounds'" label="'Sounds'"></sidenav-entry>
+        <sidenav-entry path="'/AdmistrationInterface'" label="'Administration'"></sidenav-entry>
+      </md-content>
+
+      <iframe src="./index.html?embedded=1" class="preview-frame" title="Preview"></iframe>
+    </md-sidenav>
+
+    <md-content flex class="md-whiteframe-z2">
+      <section class="content-container" ng-view></section>
+    </md-content>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ws: wss:;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poetry Slam Presentation</title>
+    
+    <!-- Preload critical resources for presentation -->
+    <link rel="preload" href="./fonts/SourceSansPro-Black.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="./media/background.png" as="image" />
+    
+    <!-- Critical CSS will be injected here by webpack -->
+  </head>
+
+  <body ng-app="ps" class="anim-video-delay-long" ng-class="{'disable-ignored-scores': !presentation.enableIgnoredScores}" fullscreen>
+    <div class="screen-container" id="screen-container">
+      <background-video url="presentation.bgVideoUrl" delay-switch></background-video>
+      <clip url="presentation.videoUrl" start-at="presentation.startVideoAt"></clip>
+
+      <div ng-switch="presentation.screen" ng-hide="presentation.bgVideo === 'pause'">
+        <intro ng-switch-when="intro"></intro>
+        <group ng-switch-when="group"></group>
+        <custom-text ng-switch-when="customText"></custom-text>
+        <participant ng-switch-when="participant"></participant>
+        <group-ratings ng-switch-when="groupRatings"></group-ratings>
+        <competition-ratings ng-switch-when="competitionRatings"></competition-ratings>
+      </div>
+    </div>
+
+    <!-- Presentation JavaScript bundles will be injected here by webpack -->
+  </body>
+</html>
