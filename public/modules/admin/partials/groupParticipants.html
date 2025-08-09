@@ -5,14 +5,14 @@
       <span flex="" class="flex"></span>
 
       <md-button class="md-accent" aria-label="Opferlamm" ng-click="addSacrifice()" ng-disabled="group.sacrifice"> + Opferlamm </md-button>
-      <md-button class="md-accent" aria-label="Poet" ng-click="addParticipant()"> + Poet </md-button>
+      <md-button class="md-accent" aria-label="Poet" ng-click="addParticipant()"> + Poet*in </md-button>
     </div>
   </md-toolbar>
 
   <md-list style="padding-bottom: 0">
     <md-subheader ng-show="group.participants && group.participants.length > 0" class="md-no-sticky">
       {{group.participants.length}}
-      <ng-pluralize count="group.participants.length" when="{1: 'Poet', 'other' :'Poeten'}"></ng-pluralize>
+      <ng-pluralize count="group.participants.length" when="{1: 'Poet*in', 'other' :'Poet*innen'}"></ng-pluralize>
       <span ng-show="group.sacrifice && group.sacrifice.id">+ Opferlamm</span>
     </md-subheader>
 
@@ -49,5 +49,5 @@
 </div>
 
 <p>
-  <small>Die Reihenfolge der Teilnehmer kannst du mit Drag & Drop ändern</small>
+  <small>Die Reihenfolge der Teilnehmer*innen kannst du mit Drag & Drop ändern</small>
 </p>

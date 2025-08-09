@@ -14,11 +14,11 @@
         </div>
       </md-input-container>
       <md-input-container>
-        <input type="number" placeholder="Anzahl Gewinner" name="winners" ng-model="data.winners" ng-min="1" ng-max="8" required="true" />
+        <input type="number" placeholder="Anzahl Gewinner*innen" name="winners" ng-model="data.winners" ng-min="1" ng-max="8" required="true" />
         <div ng-messages="competition.winners.$error" multiple md-auto-hide="false">
           <div ng-message="required">Fülle bitte dieses Feld aus</div>
-          <div ng-message="min">Es muss mindestens einen Gewinner geben</div>
-          <div ng-message="max">Nicht jeder kann Gewinner sein</div>
+          <div ng-message="min">Es muss mindestens eine*n Gewinner*in geben</div>
+          <div ng-message="max">Nicht jeder kann Gewinner*in sein</div>
         </div>
       </md-input-container>
       <md-switch ng-model="data.enableIgnoredScores" class="md-primary" aria-label="Streichwertungen aktivieren">

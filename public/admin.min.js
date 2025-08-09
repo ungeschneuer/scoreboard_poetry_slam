@@ -82638,7 +82638,7 @@ var ngFileUpload = angular.module('ngFileUpload', []);
           groupResultList.sort(sortByScore);
           var fixedWinnersOfGroup = groupResultList.slice(0, competition.fixedWinnersPerGroup);
           fixedWinnersOfGroup.forEach(function (resultEntry) {
-            resultEntry.slam = 'Gewinner ' + group.name;
+            resultEntry.slam = 'Gewinner*in ' + group.name;
           });
           fixedWinnerList = fixedWinnerList.concat(fixedWinnersOfGroup);
           var variableWinnersOfGroup = groupResultList.slice(
