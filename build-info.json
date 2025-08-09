@@ -1,0 +1,15 @@
+{
+  "buildTime": "2025-08-09T23:19:42.529Z",
+  "version": "2.0.0",
+  "optimizations": {
+    "compression": "Brotli + Gzip enabled",
+    "preloading": "Critical resources preloaded",
+    "caching": "HTTP caching with ETags",
+    "fonts": "Font-display: swap",
+    "electron": "v31.6.0 LTS",
+    "monitoring": "Performance tracking"
+  },
+  "platform": "darwin",
+  "arch": "arm64",
+  "nodeVersion": "v22.12.0"
+}

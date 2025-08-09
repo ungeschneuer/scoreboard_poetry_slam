@@ -1,65 +1,284 @@
-# Poetry Slam Scoreboard
+# 🎭 Poetry Slam Scoreboard
 
-A standalone desktop application for managing Poetry Slam competitions built with AngularJS and Electron.
+Eine moderne, plattformübergreifende Desktop-Anwendung zur Verwaltung und Präsentation von Poetry Slam-Wettbewerben mit Echtzeit-Bewertung, schönen Präsentationen und professionellen Funktionen.
 
-## Features
+Fork des nicht mehr verfügbaren Projekts von [Code for Heilbronn e.V.](https://codefor.de/projekte/hn-poetryslam/). Quick and Dirty Ansatz, um die Software wieder zum Laufen zu bringen.
 
-- **Standalone Desktop App**: No external dependencies or servers required
-- **Admin Interface**: Manage competitions, participants, and scoring
-- **Presentation View**: Display live scoreboard for audience
-- **Dual Monitor Support**: Admin on primary display, presentation on secondary
-- **Fullscreen Presentation**: Press F11 to toggle, ESC to exit fullscreen
-- **Self-Contained**: Everything runs within the Electron application
+![Poetry Slam Scoreboard](public/media-optimized/logo/logo_512.png)
 
-## Quick Start
+## ✨ Funktionen
 
+### 🎯 **Kernfunktionen**
+- **Echtzeit-Bewertung**: Live-Bewertungsberechnung und -anzeige
+- **Duale Benutzeroberfläche**: Separate Admin- und Präsentationsfenster
+- **Wettbewerbsverwaltung**: Wettbewerbe erstellen, verwalten und verfolgen
+- **Teilnehmerverwaltung**: Teilnehmer hinzufügen, bearbeiten und organisieren
+- **Gruppenunterstützung**: Teilnehmer in Gruppen organisieren
+- **Ergebnis-Export**: Wettbewerbsergebnisse als CSV exportieren
+
+### 🎨 **Präsentationsfunktionen**
+- **Schöne Displays**: Professionelle Präsentationsoberfläche
+- **Benutzerdefinierte Hintergründe**: Eigene Hintergrundbilder hochladen und verwenden
+- **Anzeigemodi**: Cover- und Contain-Modi für perfekte Bilddarstellung
+- **Responsive Design**: Passt sich verschiedenen Bildschirmgrößen und Auflösungen an
+- **Vollbild-Unterstützung**: Optimiert für Projektordisplays
+
+### 🔧 **Technische Funktionen**
+- **Plattformübergreifend**: Windows, macOS und Linux-Unterstützung
+- **Optimierte Leistung**: Schneller Start und flüssiger Betrieb
+- **Media-Optimierung**: WebP-Unterstützung und optimierte Assets
+- **Kompression**: Brotli- und Gzip-Kompression für schnelleres Laden
+- **Sicherheit**: Sichere IPC-Kommunikation und sandboxierte Ausführung
+
+## 🚀 Schnellstart
+
+### **Herunterladen & Installieren**
+
+#### **Windows**
+1. Laden Sie die neueste Version von [GitHub Releases](https://github.com/yourusername/scoreboard_poetry_slam/releases) herunter
+2. Wählen Sie Ihr bevorzugtes Format:
+   - **Installer**: `Poetry Slam Scoreboard Setup X.X.X.exe` (empfohlen)
+   - **Portable**: `Poetry Slam Scoreboard X.X.X.exe` (keine Installation)
+   - **ZIP**: `Poetry Slam Scoreboard-win32-x64.zip` (extrahieren und ausführen)
+
+#### **macOS**
+1. Laden Sie die neueste `.dmg`-Datei von [GitHub Releases](https://github.com/yourusername/scoreboard_poetry_slam/releases) herunter
+2. Öffnen Sie die DMG und ziehen Sie die App in den Applications-Ordner
+3. Starten Sie aus dem Applications-Ordner
+
+#### **Linux**
+1. Laden Sie die neueste `.AppImage` oder `.deb`-Datei herunter
+2. Ausführbar machen: `chmod +x Poetry\ Slam\ Scoreboard-X.X.X.AppImage`
+3. Ausführen: `./Poetry\ Slam\ Scoreboard-X.X.X.AppImage`
+
+### **Erster Start**
+1. **Admin-Fenster**: Öffnet sich automatisch für die Einrichtung
+2. **Präsentationsfenster**: Öffnet sich im Vollbildmodus für Displays
+3. **Wettbewerb erstellen**: Richten Sie Ihren ersten Poetry Slam-Event ein
+4. **Teilnehmer hinzufügen**: Geben Sie Teilnehmerinformationen ein
+5. **Bewertung starten**: Beginnen Sie den Wettbewerb!
+
+## 📖 Benutzerhandbuch
+
+### **Admin-Interface**
+
+#### **Wettbewerbe-Tab**
+- Neue Wettbewerbe erstellen
+- Wettbewerbsparameter festlegen
+- Aktive Wettbewerbe verwalten
+- Wettbewerbshistorie anzeigen
+
+#### **Teilnehmer-Tab**
+- Neue Teilnehmer hinzufügen
+- Teilnehmerinformationen bearbeiten
+- In Gruppen organisieren
+- Teilnehmerlisten importieren/exportieren
+
+#### **Administration-Tab**
+- **Präsentationseinstellungen**: Darstellungsaussehen anpassen
+  - Hintergrundmodus: Cover oder Contain
+  - Benutzerdefinierte Hintergrundbilder (PNG/JPEG/WebP, min. 1920×1080px)
+- **Backup & Wiederherstellung**: Wettbewerbsdaten speichern und laden
+- **Systemeinstellungen**: Anwendungsverhalten konfigurieren
+
+### **Präsentations-Interface**
+
+#### **Bewertungsanzeige**
+- Echtzeit-Bewertungsaktualisierungen
+- Teilnehmerinformationen
+- Timer- und Rundenverwaltung
+- Professionelles Präsentationslayout
+
+#### **Anpassung**
+- Eigene Hintergrundbilder hochladen
+- Anzeigemodus wählen (Cover/Contain)
+- Für verschiedene Bildschirmgrößen anpassen
+- Vollbild-Optimierung
+
+## 🛠️ Entwicklung
+
+### **Voraussetzungen**
+- Node.js 16+ 
+- npm oder yarn
+- Git
+
+### **Einrichtung**
 ```bash
+# Repository klonen
+git clone https://github.com/yourusername/scoreboard_poetry_slam.git
+cd scoreboard_poetry_slam
+
+# Abhängigkeiten installieren
 npm install
+
+# Entwicklungsserver starten
 npm start
 ```
 
-That's it! The application will:
-1. Start an internal web server automatically
-2. Launch two Electron windows (Admin + Presentation)
-3. Everything is contained within the app - no external processes
+### **Build-Befehle**
+```bash
+# Für aktuelle Plattform bauen
+npm run build
 
-## Available Scripts
+# Für spezifische Plattformen bauen
+npm run build:mac      # macOS
+npm run build:win      # Windows
+npm run build:win:portable  # Windows portable
+npm run build:win:installer # Windows installer
 
-- `npm start` - Start the standalone Electron application
-- `npm run dev` - Same as start (for development)
-- `npm run build` - Build desktop application for distribution
+# Windows-Icons einrichten (benötigt ImageMagick)
+npm run setup:win
 
-## Technology Stack
-
-- **Frontend**: AngularJS (legacy)
-- **Desktop**: Electron with embedded Fastify server
-- **UI**: Material Design
-- **Architecture**: Fully self-contained desktop application
-
-## Project Structure
-
-```
-public/           # AngularJS application files
-├── admin.html    # Admin interface
-├── index.html    # Presentation view
-├── *.min.js      # Compiled AngularJS application
-└── modules/      # AngularJS components
-
-src/
-└── electron.js   # Electron main process with embedded server
-
-assets/           # Application icons
+# Build-Konfiguration verifizieren
+npm run build:verify
 ```
 
-## How It Works
+### **Entwicklungs-Skripte**
+```bash
+# Entwicklungsmodus starten
+npm run dev
 
-1. **Single Process**: Everything runs in one Electron application
-2. **Embedded Server**: Fastify server runs inside Electron main process
-3. **Dual Windows**: Admin and presentation windows load from internal server
-4. **No External Dependencies**: No need for separate web server processes
+# Bundle-Größe analysieren
+npm run analyze
 
-## Controls
+# Bundles optimieren
+npm run optimize
 
-- **ESC**: Exit fullscreen in presentation window
-- **F11**: Toggle fullscreen in presentation window
-- **Close Admin Window**: Exits entire application
+# Tests ausführen
+npm test
+```
+
+## 📁 Projektstruktur
+
+```
+scoreboard_poetry_slam/
+├── src/                    # Quellcode
+│   ├── electron.js         # Haupt-Electron-Prozess
+│   ├── server.js           # Fastify-Webserver
+│   └── preload.js          # Preload-Skripte
+├── client/                 # Frontend-Quelle
+│   ├── src/               # AngularJS-Quelle
+│   ├── templates/         # HTML-Templates
+│   └── webpack.config.js  # Build-Konfiguration
+├── public/                # Gebaute Assets
+│   ├── admin.html         # Admin-Interface
+│   ├── index.html         # Präsentations-Interface
+│   ├── admin.min.js       # Admin-Bundle
+│   ├── index.min.js       # Präsentations-Bundle
+│   └── media-optimized/   # Optimierte Media-Assets
+├── docs/                  # Dokumentation
+├── tools/                 # Build- und Optimierungstools
+└── release/               # Gebaute Anwendungen
+```
+
+## 🔧 Konfiguration
+
+### **Umgebungsvariablen**
+```bash
+NODE_ENV=production        # Produktionsmodus
+ELECTRON_IS_DEV=false      # Dev-Tools deaktivieren
+```
+
+### **Build-Konfiguration**
+Siehe `package.json` für detaillierte Build-Konfiguration:
+- **Windows**: NSIS-Installer, portable App, ZIP
+- **macOS**: DMG, ZIP
+- **Linux**: AppImage, DEB, RPM
+
+## 🎨 Anpassung
+
+### **Präsentationseinstellungen**
+1. Admin-Interface öffnen
+2. Zum Administration-Tab gehen
+3. Präsentationseinstellungen konfigurieren:
+   - **Hintergrundmodus**: Cover (füllt Bildschirm) oder Contain (Letterbox)
+   - **Benutzerdefinierter Hintergrund**: Eigenes Bild hochladen (1920×1080px Minimum)
+   - **Einstellungen bleiben**: Änderungen werden automatisch gespeichert
+
+### **Theming**
+- CSS in `client/src/` modifizieren
+- Farben und Styling aktualisieren
+- Animationen und Übergänge anpassen
+
+## 🐛 Fehlerbehebung
+
+### **Häufige Probleme**
+
+#### **App startet nicht**
+- Node.js-Version prüfen (benötigt 16+)
+- npm-Cache löschen: `npm cache clean --force`
+- Abhängigkeiten neu installieren: `rm -rf node_modules && npm install`
+
+#### **Windows-Build schlägt fehl**
+- ImageMagick installieren: `choco install imagemagick`
+- Icon-Setup ausführen: `npm run setup:win`
+- Windows SDK-Installation prüfen
+
+#### **macOS-Build schlägt fehl**
+- Xcode Command Line Tools installieren
+- Code-Signing-Zertifikate prüfen
+- macOS-Version-Kompatibilität verifizieren
+
+#### **Leistungsprobleme**
+- Verfügbaren Speicher prüfen
+- Andere Anwendungen schließen
+- Grafiktreiber aktualisieren
+
+### **Hilfe bekommen**
+1. Überprüfen Sie die [Issues](https://github.com/yourusername/scoreboard_poetry_slam/issues)-Seite
+2. Durchsuchen Sie bestehende Diskussionen
+3. Erstellen Sie ein neues Issue mit:
+   - Betriebssystem und Version
+   - App-Version
+   - Schritte zur Reproduktion
+   - Fehlermeldungen oder Screenshots
+
+## 🤝 Mitwirken
+
+Wir freuen uns über Beiträge! Bitte sehen Sie unseren [Beitragsleitfaden](CONTRIBUTING.md) für Details.
+
+### **Entwicklungseinrichtung**
+1. Repository forken
+2. Feature-Branch erstellen
+3. Ihre Änderungen vornehmen
+4. Tests hinzufügen, falls zutreffend
+5. Pull Request einreichen
+
+### **Code-Stil**
+- Bestehenden Code-Stil befolgen
+- Aussagekräftige Commit-Nachrichten verwenden
+- Kommentare für komplexe Logik hinzufügen
+- Dokumentation bei Bedarf aktualisieren
+
+## 📄 Lizenz
+
+Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die [LICENSE](LICENSE)-Datei für Details.
+
+## 🙏 Danksagungen
+
+- **AngularJS**: Frontend-Framework
+- **Electron**: Desktop-Anwendungsframework
+- **Fastify**: Webserver
+- **Material Design**: UI-Komponenten
+- **Webpack**: Build-System
+
+## 📞 Support
+
+- **GitHub Issues**: [Fehler melden](https://github.com/yourusername/scoreboard_poetry_slam/issues)
+- **Diskussionen**: [Community-Support](https://github.com/yourusername/scoreboard_poetry_slam/discussions)
+- **E-Mail**: support@poetryslamscoreboard.com
+
+## 🗺️ Roadmap
+
+Siehe unsere [Roadmap](docs/OPTIMIZATION_AND_PUBLISHING_ROADMAP.md) für kommende Funktionen und Verbesserungen.
+
+### **Kommende Funktionen**
+- [ ] Cloud-Synchronisation
+- [ ] Erweiterte Analysen
+- [ ] Mobile Begleit-App
+- [ ] Video-Hintergrund-Unterstützung
+- [ ] Live-Streaming-Integration
+
+---
+
+**Entwickelt mit ❤️ für die Poetry Slam-Community**
