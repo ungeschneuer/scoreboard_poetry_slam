@@ -4,7 +4,7 @@ Eine moderne, plattformübergreifende Desktop-Anwendung zur Verwaltung und Präs
 
 Fork des nicht mehr verfügbaren Projekts von [Code for Heilbronn e.V.](https://codefor.de/projekte/hn-poetryslam/). Quick and Dirty Ansatz, um die Software wieder zum Laufen zu bringen.
 
-![Poetry Slam Scoreboard](public/media-optimized/logo/logo_512.png)
+![Poetry Slam Scoreboard](public/media-optimized/logo/logo_256.png)
 
 ## ✨ Funktionen
 
