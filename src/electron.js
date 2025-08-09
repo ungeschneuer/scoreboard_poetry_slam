@@ -72,7 +72,7 @@ const createAdminWindow = (display) => {
     autoHideMenuBar: true,
     backgroundColor: '#000000',
     title: 'SLAM25 Admin',
-    icon: path.join(__dirname, '../assets/angela_64.png'),
+    icon: path.join(__dirname, '../assets/logo_64.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -130,7 +130,7 @@ const createPresentationWindow = (display) => {
     autoHideMenuBar: true,
     backgroundColor: '#000000',
     title: 'SLAM25 Presentation',
-    icon: path.join(__dirname, '../assets/angela_64.png'),
+    icon: path.join(__dirname, '../assets/logo_64.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

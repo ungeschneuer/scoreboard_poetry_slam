@@ -18,6 +18,8 @@
     <!-- Optimized font loading with display: swap -->
     <link rel="stylesheet" href="./fonts/SourceSansPro-Black.css" />
     <link rel="stylesheet" href="./fonts/SourceSansPro-Light.css" />
+    <!-- Optimized media assets -->
+    <link rel="stylesheet" href="./media-optimized/optimized-media.css" />
     <link rel="stylesheet" href="admin.min.css" />
 
     <script src="admin.min.js"></script>
@@ -35,7 +37,7 @@
 
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
       <a href="admin.html#/">
-        <img src="./media/logo/logo.png" class="sidebar-logo" />
+        <img src='./media-optimized/logo/header.webp' onerror="this.onerror=null; this.src='./media-optimized/logo/header.png'" class="sidebar-logo" />
       </a>
 
       <md-content class="sidenav-menu">

@@ -25890,7 +25890,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: url('./media/background.png') no-repeat;
+  background: url('./media-optimized/background.webp'), url('./media-optimized/background.webp'), url('./media-optimized/background.webp'), url('./media-optimized/background.png') no-repeat;
   background-size: cover;
 }
 

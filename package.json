@@ -1,16 +1,16 @@
 {
   "name": "scoreboard_poetry_slam",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Poetry Slam Scoreboard - AngularJS Desktop Application",
   "main": "src/electron.js",
-  "repository": "git@github.com:Pandibrudi/scoreboard_poetry_slam.git",
-  "author": "Gregor <gluastoned@gmail.com>",
+  "repository": "git@github.com:ungeschneuer/scoreboard_poetry_slam.git",
+  "author": "Marcel <marcel@schneuer.online>",
   "license": "MIT",
   "private": true,
   "build": {
-    "appId": "eu.fomp.scoreboard_poetry_slam",
+    "appId": "eu.spektakel.scoreboard_poetry_slam",
     "productName": "Poetry Slam Scoreboard",
-    "icon": "assets/angela_512.png",
+    "icon": "assets/logo_512.png",
     "files": [
       "public/**/*",
       "src/electron.js",
@@ -41,12 +41,12 @@
           "arch": ["arm64", "x64"]
         }
       ],
-      "icon": "assets/angela_512.png",
+      "icon": "assets/logo_512.png",
       "bundleVersion": "2.0.0"
     },
     "dmg": {
       "title": "Poetry Slam Scoreboard",
-      "background": "assets/angela_512.png",
+      "background": "assets/logo_512.png",
       "iconSize": 100,
       "window": {
         "width": 600,
