@@ -122,12 +122,12 @@ class BuildVerifier {
     // Check icon files
     const iconSizes = [64, 256, 512];
     iconSizes.forEach(size => {
-      this.checkFile(`assets/logo_${size}.png`, `App icon ${size}x${size}`, size === 256);
+      this.checkFile(`public/media-optimized/logo/logo_${size}.png`, `App icon ${size}x${size}`, size === 256);
     });
     
     // Check if we have proper icon sizes for macOS
-    this.checkFile('assets/logo_512.png', 'macOS icon (512x512)', false);
-    this.checkFile('assets/logo_256.png', 'macOS icon (256x256)', true);
+    this.checkFile('public/media-optimized/logo/logo_512.png', 'macOS icon (512x512)', false);
+    this.checkFile('public/media-optimized/logo/logo_256.png', 'macOS icon (256x256)', true);
   }
 
   checkSourceFiles() {

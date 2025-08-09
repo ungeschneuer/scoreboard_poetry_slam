@@ -159,9 +159,9 @@ class PreBuildProcessor {
     
     // Check icons
     const requiredIcons = [
-      'assets/logo_256.png',
-      'assets/logo_512.png',
-      'assets/logo_64.png'
+      'public/media-optimized/logo/logo_256.png',
+      'public/media-optimized/logo/logo_512.png',
+      'public/media-optimized/logo/logo_64.png'
     ];
     
     requiredIcons.forEach(icon => {

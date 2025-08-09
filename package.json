@@ -10,7 +10,7 @@
   "build": {
     "appId": "eu.spektakel.scoreboard_poetry_slam",
     "productName": "Poetry Slam Scoreboard",
-    "icon": "assets/logo_512.png",
+    "icon": "public/media-optimized/logo/logo.ico",
     "files": [
       "public/**/*",
       "src/electron.js",
@@ -41,12 +41,40 @@
           "arch": ["arm64", "x64"]
         }
       ],
-      "icon": "assets/logo_512.png",
+      "icon": "public/media-optimized/logo/logo.ico",
       "bundleVersion": "2.0.0"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "public/media-optimized/logo/logo.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Poetry Slam Scoreboard",
+      "installerIcon": "public/media-optimized/logo/logo.ico",
+      "uninstallerIcon": "public/media-optimized/logo/logo.ico",
+      "installerHeaderIcon": "public/media-optimized/logo/logo.ico"
     },
     "dmg": {
       "title": "Poetry Slam Scoreboard",
-      "background": "assets/logo_512.png",
+      "background": "public/media-optimized/logo/logo_512.png",
       "iconSize": 100,
       "window": {
         "width": 600,
@@ -78,6 +106,10 @@
     "prebuild": "node pre-build.js",
     "build": "npm run prebuild && electron-builder",
     "build:mac": "npm run prebuild && electron-builder --mac",
+    "build:win": "npm run prebuild && electron-builder --win",
+    "build:win:portable": "npm run prebuild && electron-builder --win portable",
+    "build:win:installer": "npm run prebuild && electron-builder --win nsis",
+    "setup:win": "node create-windows-icon.js",
     "build:verify": "node build-verification.js",
     "optimize": "node comprehensive-bundle-reduction-summary.js",
     "optimize:legacy": "node optimize-bundles.js",
