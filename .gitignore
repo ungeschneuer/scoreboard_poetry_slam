@@ -9,6 +9,7 @@ tmp/
 app/**/*.js
 app/**/*.js.map
 docs/
+release/
 
 # dependencies
 node_modules/

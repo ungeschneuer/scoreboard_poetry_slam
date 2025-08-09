@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-08-09T13:29:39.037Z",
+  "summary": {
+    "originalSizeKB": 9681,
+    "optimizedSizeKB": 2880,
+    "savingsKB": 6801,
+    "savingsPercent": 70
+  },
+  "optimizations": [
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/background.png",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/background.png",
+      "originalSizeKB": 1723,
+      "newSizeKB": 431,
+      "savings": 75,
+      "format": "webp"
+    },
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/clips/bg.png",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/clips/bg.png",
+      "originalSizeKB": 6086,
+      "newSizeKB": 1522,
+      "savings": 75,
+      "format": "webp"
+    },
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/logo/angela.png",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/logo/angela.png",
+      "originalSizeKB": 13,
+      "newSizeKB": 5,
+      "savings": 60,
+      "format": "webp"
+    },
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/logo/logo.png",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/logo/logo.png",
+      "originalSizeKB": 76,
+      "newSizeKB": 30,
+      "savings": 60,
+      "format": "webp"
+    },
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/clips/bg_to_logo.mp4",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/clips/bg_to_logo.mp4",
+      "originalSizeKB": 658,
+      "newSizeKB": 329,
+      "savings": 50,
+      "format": "mp4-optimized"
+    },
+    {
+      "originalPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media/clips/logo_to_bg.mp4",
+      "optimizedPath": "/Users/marcel/Developer/scoreboard_poetry_slam/public/media-optimized/clips/logo_to_bg.mp4",
+      "originalSizeKB": 1125,
+      "newSizeKB": 563,
+      "savings": 50,
+      "format": "mp4-optimized"
+    }
+  ],
+  "errors": [],
+  "recommendations": [
+    "Install production optimization tools",
+    "Implement WebP conversion for images",
+    "Add responsive image variants",
+    "Optimize video compression with ffmpeg",
+    "Update templates to use optimized media"
+  ]
+}

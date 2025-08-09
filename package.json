@@ -9,26 +9,82 @@
   "private": true,
   "build": {
     "appId": "eu.fomp.scoreboard_poetry_slam",
-    "icon": "assets/angela_256.png",
+    "productName": "Poetry Slam Scoreboard",
+    "icon": "assets/angela_512.png",
     "files": [
       "public/**/*",
       "src/electron.js",
-      "assets/**/*"
+      "performance-monitor.js",
+      "assets/**/*",
+      "!public/optimized*/**/*",
+      "!public/test-*.html",
+      "!public/admin-*.html",
+      "!**/*.md",
+      "!**/webpack*.js",
+      "!**/bundle-*.js",
+      "!**/comprehensive-*.js",
+      "!**/material-*.js",
+      "!**/icon-*.js"
     ],
     "directories": {
       "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64", "x64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["arm64", "x64"]
+        }
+      ],
+      "icon": "assets/angela_512.png",
+      "bundleVersion": "2.0.0"
+    },
+    "dmg": {
+      "title": "Poetry Slam Scoreboard",
+      "background": "assets/angela_512.png",
+      "iconSize": 100,
+      "window": {
+        "width": 600,
+        "height": 400
+      },
+      "contents": [
+        {
+          "x": 150,
+          "y": 200,
+          "type": "file"
+        },
+        {
+          "x": 450,
+          "y": 200,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "compression": "maximum",
+    "extraMetadata": {
+      "version": "2.0.0",
+      "description": "Poetry Slam Scoreboard - Optimized Desktop Application"
     }
   },
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --exec electron .",
-    "build": "electron-builder",
+    "prebuild": "node pre-build.js",
+    "build": "npm run prebuild && electron-builder",
+    "build:mac": "npm run prebuild && electron-builder --mac",
+    "build:verify": "node build-verification.js",
     "optimize": "node comprehensive-bundle-reduction-summary.js",
     "optimize:legacy": "node optimize-bundles.js",
     "analyze": "node bundle-size-reduction-plan.js",
     "build:vendor-split": "webpack --config webpack.vendor-split.config.js --mode=production",
     "build:vendor-split:dev": "webpack --config webpack.vendor-split.config.js --mode=development",
-    "clean": "rm -rf dist public/optimized public/vendor-split",
+    "clean": "rm -rf dist public/optimized public/vendor-split release",
     "serve": "node src/server.js",
     "test:compression": "npm start"
   },
