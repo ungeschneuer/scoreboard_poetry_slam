@@ -2,6 +2,7 @@ const { app, BrowserWindow, dialog, screen, ipcMain } = require('electron');
 const { fastify } = require('fastify');
 const static = require('@fastify/static');
 const path = require('path');
+const PerformanceMonitor = require('../performance-monitor');
 
 let adminWindow;
 let presentationWindow;
@@ -177,20 +178,49 @@ const createPresentationWindow = (display) => {
 };
 
 const onAppReady = async () => {
+  // Initialize performance monitoring
+  const monitor = new PerformanceMonitor();
+  monitor.markStartupPhase('app-ready');
+  monitor.recordMemoryUsage('startup');
+
   // Setup secure IPC handlers
   setupIpcHandlers();
 
-  // Start embedded web server (temporarily disable compression for debugging)
+  // Start embedded web server with optimized compression
   const server = fastify({ logger: false });
   
+  // Register compression with safe configuration for AngularJS
+  await server.register(require('@fastify/compress'), {
+    global: false, // Don't compress everything automatically
+    threshold: 10240, // Only compress files larger than 10KB
+    encodings: ['br', 'gzip'], // Brotli preferred, gzip fallback
+    customTypes: /text\/|application\/javascript|application\/json/, // Only compress text files
+    onInvalidRequestPayload: () => {}, // Handle invalid payloads gracefully
+    zlibOptions: {
+      level: 6, // Balanced compression level
+      chunkSize: 1024,
+    }
+  });
+  
   server.register(static, { 
-    root: path.join(__dirname, '..', 'public')
+    root: path.join(__dirname, '..', 'public'),
+    preCompressed: false, // Don't look for .gz files yet
+    decorateReply: false,
+    cacheControl: true,
+    maxAge: '1h', // Cache static assets for 1 hour
+    etag: true,
+    lastModified: true
   });
 
   try {
     await server.listen({ port: 4200, host: '127.0.0.1' });
     console.log('🚀 Poetry Slam Scoreboard - Electron App Started');
     console.log('📡 Internal server running on http://localhost:4200');
+    console.log('🗜️  Compression: Brotli + Gzip enabled');
+    console.log('⚡ Quick wins: Resource preloading, optimized fonts, HTTP caching');
+    
+    monitor.markStartupPhase('server-ready');
+    monitor.recordMemoryUsage('server-started');
 
     const allDisplays = screen.getAllDisplays();
     const primaryDisplay = screen.getPrimaryDisplay();
