@@ -61,11 +61,11 @@ const createPresentationWindow = (display) => {
   const config = {
     x: display !== undefined ? display.bounds.x : 0,
     y: display !== undefined ? display.bounds.y : 0,
-    width: 800,
-    height: 600,
-    frame: true,
-    closable: false,
-    fullscreen: display !== undefined,
+    width: display !== undefined ? display.bounds.width : 1920,
+    height: display !== undefined ? display.bounds.height : 1080,
+    frame: true, // Rahmen für Beweglichkeit im Fenstermodus
+    closable: true, // Erlaubt Schließen im Fenstermodus
+    fullscreen: true, // Startet im Vollbild
     autoHideMenuBar: true,
     backgroundColor: '#000000',
     title: 'Slam22 Presentation',
@@ -84,6 +84,24 @@ const createPresentationWindow = (display) => {
   presentationWindow.maximize();
   presentationWindow.webContents.setAudioMuted(false);
   // presentationWindow.webContents.openDevTools();
+  
+  // Simple ESC key handler for presentation window
+  presentationWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.key === 'Escape' && input.type === 'keyDown') {
+      console.log('ESC pressed - exiting fullscreen');
+      presentationWindow.setFullScreen(false);
+      // Make window movable when not in fullscreen
+      presentationWindow.setMovable(true);
+    }
+    if (input.key === 'F11' && input.type === 'keyDown') {
+      console.log('F11 pressed - toggling fullscreen');
+      const isFullScreen = presentationWindow.isFullScreen();
+      presentationWindow.setFullScreen(!isFullScreen);
+      // Control movability based on fullscreen state
+      presentationWindow.setMovable(!isFullScreen);
+    }
+  });
+  
   presentationWindow.loadURL(`http://localhost:4200/index.html`);
 
   presentationWindow.on('closed', () => {
@@ -92,11 +110,14 @@ const createPresentationWindow = (display) => {
 };
 
 const onAppReady = async () => {
+  // Start embedded web server
   const server = fastify({ logger: false });
   server.register(static, { root: path.join(__dirname, '..', 'public') });
 
   try {
-    await server.listen({ port: 4200, host: '0.0.0.0' });
+    await server.listen({ port: 4200, host: '127.0.0.1' });
+    console.log('🚀 Poetry Slam Scoreboard - Electron App Started');
+    console.log('📡 Internal server running on http://localhost:4200');
 
     const allDisplays = screen.getAllDisplays();
     const primaryDisplay = screen.getPrimaryDisplay();
@@ -112,7 +133,8 @@ const onAppReady = async () => {
 
     createPresentationWindow(secondaryDisplay);
   } catch (error) {
-    // console.log(error);
+    console.error('❌ Failed to start internal server:', error);
+    app.quit();
   }
 };
 
