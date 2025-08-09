@@ -166,9 +166,7 @@ scoreboard_poetry_slam/
 │   ├── admin.min.js       # Admin-Bundle
 │   ├── index.min.js       # Präsentations-Bundle
 │   └── media-optimized/   # Optimierte Media-Assets
-├── docs/                  # Dokumentation
 ├── tools/                 # Build- und Optimierungstools
-└── release/               # Gebaute Anwendungen
 ```
 
 ## 🔧 Konfiguration
@@ -224,27 +222,9 @@ Siehe `package.json` für detaillierte Build-Konfiguration:
 - Andere Anwendungen schließen
 - Grafiktreiber aktualisieren
 
-### **Hilfe bekommen**
-1. Überprüfen Sie die [Issues](https://github.com/yourusername/scoreboard_poetry_slam/issues)-Seite
-2. Durchsuchen Sie bestehende Diskussionen
-3. Erstellen Sie ein neues Issue mit:
-   - Betriebssystem und Version
-   - App-Version
-   - Schritte zur Reproduktion
-   - Fehlermeldungen oder Screenshots
 
-## 🤝 Mitwirken
 
-Wir freuen uns über Beiträge! Bitte sehen Sie unseren [Beitragsleitfaden](CONTRIBUTING.md) für Details.
 
-### **Entwicklungseinrichtung**
-1. Repository forken
-2. Feature-Branch erstellen
-3. Ihre Änderungen vornehmen
-4. Tests hinzufügen, falls zutreffend
-5. Pull Request einreichen
-
-### **Code-Stil**
 - Bestehenden Code-Stil befolgen
 - Aussagekräftige Commit-Nachrichten verwenden
 - Kommentare für komplexe Logik hinzufügen
@@ -254,31 +234,4 @@ Wir freuen uns über Beiträge! Bitte sehen Sie unseren [Beitragsleitfaden](CONT
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die [LICENSE](LICENSE)-Datei für Details.
 
-## 🙏 Danksagungen
-
-- **AngularJS**: Frontend-Framework
-- **Electron**: Desktop-Anwendungsframework
-- **Fastify**: Webserver
-- **Material Design**: UI-Komponenten
-- **Webpack**: Build-System
-
-## 📞 Support
-
-- **GitHub Issues**: [Fehler melden](https://github.com/yourusername/scoreboard_poetry_slam/issues)
-- **Diskussionen**: [Community-Support](https://github.com/yourusername/scoreboard_poetry_slam/discussions)
-- **E-Mail**: support@poetryslamscoreboard.com
-
-## 🗺️ Roadmap
-
-Siehe unsere [Roadmap](docs/OPTIMIZATION_AND_PUBLISHING_ROADMAP.md) für kommende Funktionen und Verbesserungen.
-
-### **Kommende Funktionen**
-- [ ] Cloud-Synchronisation
-- [ ] Erweiterte Analysen
-- [ ] Mobile Begleit-App
-- [ ] Video-Hintergrund-Unterstützung
-- [ ] Live-Streaming-Integration
-
----
-
-**Entwickelt mit ❤️ für die Poetry Slam-Community**
+#
