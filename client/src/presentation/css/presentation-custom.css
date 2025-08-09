@@ -1,0 +1,482 @@
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-minimal {
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    position: relative;
+}
+
+.odometer.odometer-auto-theme .odometer-digit,
+.odometer.odometer-theme-minimal .odometer-digit {
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    position: relative;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer {
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    visibility: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner {
+    text-align: left;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon {
+    display: block;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner {
+    display: block;
+    -webkit-backface-visibility: hidden;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-value {
+    display: block;
+    -webkit-transform: translateZ(0);
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,
+.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value {
+    position: absolute;
+}
+
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner {
+    -webkit-transition: -webkit-transform 2s;
+    -moz-transition: -moz-transform 2s;
+    -ms-transition: -ms-transform 2s;
+    -o-transition: -o-transform 2s;
+    transition: transform 2s;
+}
+
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner {
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+    -webkit-transition: -webkit-transform 2s;
+    -moz-transition: -moz-transform 2s;
+    -ms-transition: -ms-transform 2s;
+    -o-transition: -o-transform 2s;
+    transition: transform 2s;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+}
+
+html,
+body {
+    font-family: 'Roboto', 'Helvetica', serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: #fff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+.ng-hide-add:not(.hide-instant) {
+    transition: 0.3s ease-in all;
+}
+
+.ng-leave:not(.remove-instant) {
+    animation-name: fadeOut !important;
+    animation-delay: 0.5s !important;
+}
+
+.ng-leave.remove-instant {
+    display: none !important;
+}
+
+.screen-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: url('./media/background.png') no-repeat;
+    background-size: cover;
+}
+
+.fullscreen-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.fullscreen-clip {
+    z-index: 99999;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.overlay-center {
+    position: absolute;
+    left: 15%;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    transition: all 1s ease-in;
+    color: #fff;
+}
+
+.box {
+    padding: 1.33%;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    opacity: 0.9;
+    background-clip: padding-box;
+}
+
+.box-highlight {
+    background-color: #ebebff;
+    color: #000;
+}
+
+.participant-row-main.box-highlight {
+    background-color: #9c3eb4;
+    color: #fff;
+}
+
+.box-grey {
+    background-color: #ebebff;
+    color: #000;
+}
+
+.box-ignored {
+    background-color: #000000;
+    color: #444;
+    opacity: 0.4;
+}
+
+.overlay-highlight {
+    width: 100%;
+    font-size: 10vh;
+    min-height: 14%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.overlay-subline {
+    margin-top: 0.5vw;
+    font-size: 4vh;
+}
+
+/** PARTICIPANT **/
+
+@keyframes sublineIntro {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(-2000px, -15vh, 0);
+        font-size: 8vh;
+    }
+
+    30% {
+        opacity: 1;
+        transform: translate3d(0, -15vh, 0);
+        font-size: 8vh;
+    }
+
+    80% {
+        transform: translate3d(0, -15vh, 0);
+        font-size: 8vh;
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+.anim-video-delay {
+    animation-delay: 0s;
+}
+
+.anim-video-delay-secondary {
+    animation-delay: 1s;
+}
+
+.anim-video-delay-long .anim-video-delay {
+    animation-delay: 2.5s;
+}
+
+.anim-video-delay-long .anim-video-delay-secondary {
+    animation-delay: 3.5s;
+}
+
+.animation-subline-intro {
+    animation-duration: 3s;
+    animation-name: sublineIntro;
+}
+
+.animation-subline-intro.after-video {
+    animation-delay: 1.5s;
+}
+
+.animation-subline-intro-after {
+    animation-delay: 2.4s;
+}
+
+.animation-subline-intro-after.after-video {
+    animation-delay: 3.9s;
+}
+
+.anim-video-delay-long .animation-subline-intro {
+    animation-delay: 2.5s;
+}
+
+.anim-video-delay-long .animation-subline-intro.after-video {
+    animation-delay: 4s;
+}
+
+.anim-video-delay-long .animation-subline-intro-after {
+    animation-delay: 4.9s;
+}
+
+.anim-video-delay-long .animation-subline-intro-after.after-video {
+    animation-delay: 6.4s;
+}
+
+.scores {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 4.5vw;
+    transition: all 1s ease-in;
+    perspective: 800px;
+}
+
+.scores.zoomOut {
+    height: 0;
+}
+
+.box-scores.box-highlight {
+    background: transparent;
+    color: #fff;
+}
+
+.scores li {
+    background-color: #ebebff;
+    color: #000;
+    background-clip: padding-box;
+    padding: 0.8vw;
+    flex: 0 0 3.25ch;
+    height: 5.3vw;
+    border: 0.75vw solid transparent;
+    transform-style: preserve-3d;
+    transition: transform 600ms;
+    position: relative;
+}
+
+.scores li.light {
+    transform: rotateY(180deg);
+}
+
+.scores li figure {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ebebff;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scores li figure.front {
+    z-index: 1;
+}
+
+.scores li figure.back {
+    transform: rotateY(180deg);
+}
+
+.scores li.hinge figure.back {
+    display: none;
+}
+
+.scores.scores-count-7 {
+    width: 80%;
+    margin: 0 auto;
+}
+
+odometer {
+    display: block;
+    min-height: 20vh;
+    font-size: 15vh;
+}
+
+/** PARTICIPANT LIST **/
+
+.participant-list {
+    display: flex;
+    width: 84%;
+    margin-left: 6%;
+    flex-direction: column;
+}
+
+.list-subline {
+    text-align: left;
+}
+
+.participant-row {
+    display: flex;
+    background-clip: padding-box;
+    border: 0.5vw solid transparent;
+    border-left: none;
+}
+
+.winner-row {
+    visibility: hidden;
+}
+
+.winner-row-visible {
+    visibility: visible;
+    animation-duration: 3s;
+    animation-name: zoomInDown;
+}
+
+.participant-row-main {
+    display: flex;
+    flex: 1;
+}
+
+.participant-row-column {
+    border-left: 1vw solid transparent;
+}
+
+.participant-row-ignored-scores {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 2vh;
+    min-width: 8vw;
+}
+
+.participant-column-name {
+    flex: 1;
+    text-align: left;
+}
+
+.participant-column-score {
+    flex: 0 0 10%;
+    font-size: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 10vw;
+    font-weight: bold;
+}
+
+.participant-list-name {
+    font-size: 2.5vh;
+    font-weight: bold;
+}
+
+.participant-list-slam {
+    font-size: 1.5vh;
+    font-family: Georgia, serif;
+    text-transform: none;
+}
+
+.disable-ignored-scores .participant-second-total,
+.disable-ignored-scores .participant-ignored-scores {
+    display: none !important;
+}
+
+/** TODO we need a configuration option for the user to disable the second row in participant lists **/
+
+.participant-list-name {
+    font-size: 3.5vh;
+    line-height: 4.5vh;
+}
+
+.participant-column-score {
+    font-size: 3.5vh;
+}
+
+.participant-list-slam {
+    display: none;
+}
+
+#partners {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    display: flex;
+    height: 7vw;
+    width: 100vw;
+    justify-content: space-between;
+    padding: 1vw;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#partners img {
+    height: 100%;
+}
+
+background-video {
+    filter: brightness(0.5);
+}

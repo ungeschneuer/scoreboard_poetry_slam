@@ -1,10 +1,63 @@
-const { app, BrowserWindow, dialog, screen } = require('electron');
+const { app, BrowserWindow, dialog, screen, ipcMain } = require('electron');
 const { fastify } = require('fastify');
 const static = require('@fastify/static');
 const path = require('path');
 
 let adminWindow;
 let presentationWindow;
+
+// Secure IPC handlers
+const setupIpcHandlers = () => {
+  // Window controls
+  ipcMain.handle('close-app', () => {
+    app.quit();
+  });
+
+  ipcMain.handle('minimize-window', () => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    if (focusedWindow) focusedWindow.minimize();
+  });
+
+  ipcMain.handle('maximize-window', () => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    if (focusedWindow) {
+      if (focusedWindow.isMaximized()) {
+        focusedWindow.unmaximize();
+      } else {
+        focusedWindow.maximize();
+      }
+    }
+  });
+
+  // Presentation controls
+  ipcMain.handle('toggle-fullscreen', () => {
+    if (presentationWindow) {
+      const isFullScreen = presentationWindow.isFullScreen();
+      presentationWindow.setFullScreen(!isFullScreen);
+      presentationWindow.setMovable(!isFullScreen);
+    }
+  });
+
+  ipcMain.handle('exit-fullscreen', () => {
+    if (presentationWindow) {
+      presentationWindow.setFullScreen(false);
+      presentationWindow.setMovable(true);
+    }
+  });
+
+  // Development tools (remove in production)
+  ipcMain.handle('open-dev-tools', () => {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    if (focusedWindow) focusedWindow.webContents.openDevTools();
+  });
+
+  // App info
+  ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
+  });
+
+  console.log('🔒 Secure IPC handlers registered');
+};
 
 const createAdminWindow = (display) => {
   const config = {
@@ -17,10 +70,17 @@ const createAdminWindow = (display) => {
     fullscreen: false,
     autoHideMenuBar: true,
     backgroundColor: '#000000',
-    title: 'Slam22 Admin',
+    title: 'SLAM25 Admin',
     icon: path.join(__dirname, '../assets/angela_64.png'),
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      sandbox: false,
+      preload: path.join(__dirname, 'preload.js'),
+      webSecurity: true,
+      allowRunningInsecureContent: false,
+      experimentalFeatures: false
     },
   };
 
@@ -40,7 +100,7 @@ const createAdminWindow = (display) => {
     const choice = dialog.showMessageBoxSync(adminWindow, {
       type: 'question',
       buttons: ['Cancel', 'Close'],
-      title: 'Quit Slam22 Scoreboard?',
+      title: 'Quit SLAM25 Scoreboard?',
       message: 'This will close Admin and Presentation windows.',
       defaultId: 0,
       cancelId: 0,
@@ -68,10 +128,17 @@ const createPresentationWindow = (display) => {
     fullscreen: true, // Startet im Vollbild
     autoHideMenuBar: true,
     backgroundColor: '#000000',
-    title: 'Slam22 Presentation',
+    title: 'SLAM25 Presentation',
     icon: path.join(__dirname, '../assets/angela_64.png'),
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      sandbox: false,
+      preload: path.join(__dirname, 'preload.js'),
+      webSecurity: true,
+      allowRunningInsecureContent: false,
+      experimentalFeatures: false
     },
   };
 
@@ -110,6 +177,9 @@ const createPresentationWindow = (display) => {
 };
 
 const onAppReady = async () => {
+  // Setup secure IPC handlers
+  setupIpcHandlers();
+
   // Start embedded web server
   const server = fastify({ logger: false });
   server.register(static, { root: path.join(__dirname, '..', 'public') });
