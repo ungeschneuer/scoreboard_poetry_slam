@@ -249,3 +249,34 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/node,angular,windows,linux,macos
+
+
+# Build artifacts and optimization outputs
+dist/
+release/
+public/optimized*/
+public/tree-shaken/
+public/vendor-split/
+
+# Performance and analysis reports
+performance-report-*.json
+bundle-analysis.json
+build-info.json
+*-report.json
+
+# Temporary files
+*.tmp
+.tmp/
+public/test-*.html
+public/admin-debug*.html
+public/admin-diagnostic*.html
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/settings.json
