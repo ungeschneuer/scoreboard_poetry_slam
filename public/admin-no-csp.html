@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- CSP REMOVED FOR TESTING -->
+    <title>Poetry Slam Admin</title>
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Black.css" />
+    <link rel="stylesheet" href="./fonts/SourceSansPro-Light.css" />
+    <link rel="stylesheet" href="admin.min.css" />
+
+    <script src="admin.min.js"></script>
+  </head>
+
+  <body layout="row" ng-app="psadmin">
+    <background-audio audio-shortcuts></background-audio>
+
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+
+      <a href="admin.html#/">
+        <img src="./media/logo/logo.png" class="sidebar-logo" />
+      </a>
+
+      <md-list>
+        <admin-menu></admin-menu>
+      </md-list>
+
+    </md-sidenav>
+
+    <md-content flex layout="column">
+
+      <md-toolbar class="md-whiteframe-z1">
+
+        <div class="md-toolbar-tools">
+
+          <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon>settings</md-icon>
+          </md-button>
+          <h2>
+            <span>SLAM25</span>
+          </h2>
+          <span flex></span>
+          <about-link-icon />
+
+        </div>
+
+      </md-toolbar>
+
+      <ng-view ng-cloak></ng-view>
+
+    </md-content>
+
+  </body>
+
+</html>

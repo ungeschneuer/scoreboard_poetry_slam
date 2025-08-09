@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="admin.min.css" />
 
     <script src="admin.min.js"></script>
+    
+    <!-- Debug: Check if files exist -->
+    <script>
+      console.log('🔍 Admin HTML loaded');
+      fetch('admin.min.js').then(r => console.log('✅ admin.min.js:', r.status)).catch(e => console.error('❌ admin.min.js:', e));
+      fetch('admin.min.css').then(r => console.log('✅ admin.min.css:', r.status)).catch(e => console.error('❌ admin.min.css:', e));
+    </script>
   </head>
 
   <body layout="row" ng-app="psadmin">

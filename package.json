@@ -23,12 +23,17 @@
     "start": "electron .",
     "dev": "nodemon --exec electron .",
     "build": "electron-builder",
-    "optimize": "node optimize-bundles.js",
-    "analyze": "node optimize-bundles.js",
-    "clean": "rm -rf dist public/optimized",
-    "serve": "node src/server.js"
+    "optimize": "node comprehensive-bundle-reduction-summary.js",
+    "optimize:legacy": "node optimize-bundles.js",
+    "analyze": "node bundle-size-reduction-plan.js",
+    "build:vendor-split": "webpack --config webpack.vendor-split.config.js --mode=production",
+    "build:vendor-split:dev": "webpack --config webpack.vendor-split.config.js --mode=development",
+    "clean": "rm -rf dist public/optimized public/vendor-split",
+    "serve": "node src/server.js",
+    "test:compression": "npm start"
   },
   "dependencies": {
+    "@fastify/compress": "^6.5.0",
     "@fastify/static": "^6.5.0",
     "fastify": "^4.9.2"
   },

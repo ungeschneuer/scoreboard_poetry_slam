@@ -8,6 +8,7 @@ dist/
 tmp/
 app/**/*.js
 app/**/*.js.map
+docs/
 
 # dependencies
 node_modules/
@@ -247,5 +248,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/node,angular,windows,linux,macos
-
-./docs/

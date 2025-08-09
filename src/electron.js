@@ -180,9 +180,12 @@ const onAppReady = async () => {
   // Setup secure IPC handlers
   setupIpcHandlers();
 
-  // Start embedded web server
+  // Start embedded web server (temporarily disable compression for debugging)
   const server = fastify({ logger: false });
-  server.register(static, { root: path.join(__dirname, '..', 'public') });
+  
+  server.register(static, { 
+    root: path.join(__dirname, '..', 'public')
+  });
 
   try {
     await server.listen({ port: 4200, host: '127.0.0.1' });

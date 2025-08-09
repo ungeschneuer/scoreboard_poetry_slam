@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin UI Diagnostic</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f5f5f5; 
+        }
+        .diagnostic { 
+            background: white; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            border-left: 4px solid #007cba; 
+        }
+        .error { border-left-color: #d32f2f; }
+        .success { border-left-color: #388e3c; }
+        .warning { border-left-color: #f57c00; }
+        #console-output { 
+            background: #000; 
+            color: #0f0; 
+            padding: 10px; 
+            font-family: monospace; 
+            max-height: 200px; 
+            overflow-y: auto; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🩺 Admin UI Diagnostic Tool</h1>
+    
+    <div class="diagnostic" id="basic-check">
+        <h3>1. Basic Functionality</h3>
+        <p>✅ HTML and CSS are loading</p>
+        <p id="js-check">🔄 Testing JavaScript...</p>
+    </div>
+    
+    <div class="diagnostic" id="resource-check">
+        <h3>2. Resource Loading</h3>
+        <div id="resource-results">🔄 Checking resources...</div>
+    </div>
+    
+    <div class="diagnostic" id="angular-check">
+        <h3>3. AngularJS Status</h3>
+        <div id="angular-results">🔄 Checking AngularJS...</div>
+    </div>
+    
+    <div class="diagnostic" id="csp-check">
+        <h3>4. Content Security Policy</h3>
+        <div id="csp-results">🔄 Checking CSP...</div>
+    </div>
+    
+    <div class="diagnostic">
+        <h3>5. Console Output</h3>
+        <div id="console-output"></div>
+    </div>
+    
+    <div class="diagnostic">
+        <h3>6. Network Requests</h3>
+        <div id="network-results">🔄 Monitoring network...</div>
+    </div>
+
+    <script>
+        // Capture console output
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToConsole(type, message) {
+            consoleOutput.innerHTML += `<div style="color: ${type === 'error' ? '#ff5555' : type === 'warn' ? '#ffaa00' : '#55ff55'}">[${type.toUpperCase()}] ${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = (...args) => {
+            originalLog(...args);
+            addToConsole('log', args.join(' '));
+        };
+        
+        console.error = (...args) => {
+            originalError(...args);
+            addToConsole('error', args.join(' '));
+        };
+        
+        console.warn = (...args) => {
+            originalWarn(...args);
+            addToConsole('warn', args.join(' '));
+        };
+        
+        // Capture unhandled errors
+        window.addEventListener('error', (e) => {
+            addToConsole('error', `Unhandled error: ${e.error ? e.error.message : e.message} at ${e.filename}:${e.lineno}`);
+        });
+        
+        // Test 1: Basic JavaScript
+        document.getElementById('js-check').innerHTML = '✅ JavaScript is working';
+        
+        // Test 2: Resource loading
+        const resources = [
+            'admin.min.js',
+            'admin.min.css',
+            'fonts/SourceSansPro-Black.css',
+            'fonts/SourceSansPro-Light.css'
+        ];
+        
+        const resourceResults = document.getElementById('resource-results');
+        let resourceChecks = '';
+        
+        Promise.all(resources.map(resource => 
+            fetch(resource)
+                .then(response => ({
+                    resource,
+                    status: response.status,
+                    ok: response.ok,
+                    size: response.headers.get('content-length')
+                }))
+                .catch(error => ({
+                    resource,
+                    error: error.message
+                }))
+        )).then(results => {
+            results.forEach(result => {
+                if (result.error) {
+                    resourceChecks += `<p>❌ ${result.resource}: ${result.error}</p>`;
+                } else if (result.ok) {
+                    resourceChecks += `<p>✅ ${result.resource}: OK (${result.size ? Math.round(result.size/1024) + 'KB' : 'unknown size'})</p>`;
+                } else {
+                    resourceChecks += `<p>⚠️ ${result.resource}: HTTP ${result.status}</p>`;
+                }
+            });
+            resourceResults.innerHTML = resourceChecks;
+        });
+        
+        // Test 3: AngularJS
+        setTimeout(() => {
+            const angularResults = document.getElementById('angular-results');
+            
+            if (typeof angular !== 'undefined') {
+                angularResults.innerHTML = `<p>✅ AngularJS loaded (version: ${angular.version ? angular.version.full : 'unknown'})</p>`;
+                
+                // Try to find the psadmin module
+                try {
+                    const module = angular.module('psadmin');
+                    angularResults.innerHTML += '<p>✅ psadmin module found</p>';
+                } catch (e) {
+                    angularResults.innerHTML += `<p>❌ psadmin module not found: ${e.message}</p>`;
+                }
+            } else {
+                angularResults.innerHTML = '<p>❌ AngularJS not loaded</p>';
+                
+                // Try to load it manually
+                const script = document.createElement('script');
+                script.src = 'admin.min.js';
+                script.onload = () => {
+                    setTimeout(() => {
+                        if (typeof angular !== 'undefined') {
+                            angularResults.innerHTML += '<p>✅ AngularJS loaded after manual script load</p>';
+                        } else {
+                            angularResults.innerHTML += '<p>❌ AngularJS still not available after script load</p>';
+                        }
+                    }, 1000);
+                };
+                script.onerror = () => {
+                    angularResults.innerHTML += '<p>❌ Failed to load admin.min.js</p>';
+                };
+                document.head.appendChild(script);
+            }
+        }, 2000);
+        
+        // Test 4: CSP
+        const cspResults = document.getElementById('csp-results');
+        try {
+            // Try to execute inline JavaScript (should work with relaxed CSP)
+            eval('var cspTest = true;');
+            cspResults.innerHTML = '<p>✅ CSP allows eval() - inline JavaScript permitted</p>';
+        } catch (e) {
+            cspResults.innerHTML = `<p>❌ CSP blocking eval(): ${e.message}</p>`;
+        }
+        
+        // Test 5: Network monitoring
+        const networkResults = document.getElementById('network-results');
+        let networkLog = '';
+        
+        // Monitor fetch requests
+        const originalFetch = window.fetch;
+        window.fetch = (...args) => {
+            networkLog += `<p>🌐 FETCH: ${args[0]}</p>`;
+            networkResults.innerHTML = networkLog;
+            return originalFetch(...args);
+        };
+        
+        // Initial log
+        console.log('🩺 Admin UI Diagnostic Tool started');
+        console.log('📊 Checking admin UI functionality...');
+    </script>
+</body>
+</html>

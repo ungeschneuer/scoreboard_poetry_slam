@@ -1,0 +1,36 @@
+{
+  "currentState": {
+    "totalSize": 7338,
+    "adminJs": 3118,
+    "presentationJs": 3119,
+    "adminCss": 517,
+    "presentationCss": 584
+  },
+  "optimizations": {
+    "brotliCompression": {
+      "savings": 5503,
+      "effort": "Low",
+      "implementation": "Server configuration"
+    },
+    "materialTreeShaking": {
+      "savings": 1000,
+      "effort": "Medium",
+      "implementation": "Custom build process"
+    },
+    "iconOptimization": {
+      "savings": 150,
+      "effort": "Low",
+      "implementation": "Icon font subsetting"
+    },
+    "deadCodeElimination": {
+      "savings": 400,
+      "effort": "Medium",
+      "implementation": "Static analysis and removal"
+    }
+  },
+  "projectedResults": {
+    "withCompression": 1834,
+    "withTreeShaking": 1447,
+    "totalReduction": "81%"
+  }
+}
