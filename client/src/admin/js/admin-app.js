@@ -977,7 +977,205 @@
 (function() {
     'use strict';
 
-    angular.module('psadmin').controller('AdministrationInterfaceCtrl', function($scope) {});
+    angular.module('psadmin').controller('AdministrationInterfaceCtrl', function($scope, $mdToast, StorageService) {
+        var self = this;
+        
+        // Default settings
+        var defaultSettings = {
+            backgroundMode: 'cover',
+            customBackgroundUrl: null,
+            customBackgroundName: null
+        };
+        
+        // Initialize settings
+        $scope.settings = angular.copy(defaultSettings);
+        $scope.isLoading = false;
+        $scope.backgroundModes = [
+            { value: 'cover', label: 'Cover (Fill entire window, may crop)' },
+            { value: 'contain', label: 'Contain (Fit entire image, may show borders)' }
+        ];
+
+        // Load current settings
+        function loadSettings() {
+            $scope.isLoading = true;
+            StorageService.getItem('presentationSettings').then(function(saved) {
+                if (saved) {
+                    $scope.settings = angular.extend({}, defaultSettings, saved);
+                } else {
+                    $scope.settings = angular.copy(defaultSettings);
+                }
+                $scope.isLoading = false;
+                applySettings();
+            }).catch(function(error) {
+                console.error('Failed to load settings:', error);
+                $scope.settings = angular.copy(defaultSettings);
+                $scope.isLoading = false;
+            });
+        }
+
+        // Save settings
+        $scope.saveSettings = function() {
+            $scope.isLoading = true;
+            
+            StorageService.setItem('presentationSettings', $scope.settings).then(function() {
+                $scope.isLoading = false;
+                applySettings();
+                showToast('Settings saved successfully!', 'success');
+            }).catch(function(error) {
+                console.error('Failed to save settings:', error);
+                $scope.isLoading = false;
+                showToast('Failed to save settings: ' + error.message, 'error');
+            });
+        };
+
+        // Reset to defaults
+        $scope.resetSettings = function() {
+            if (confirm('Are you sure you want to reset all presentation settings to defaults?')) {
+                $scope.settings = angular.copy(defaultSettings);
+                $scope.saveSettings();
+                showToast('Settings reset to defaults', 'success');
+            }
+        };
+
+        // Apply settings to presentation
+        function applySettings() {
+            // Remove existing dynamic styles
+            var existingStyle = document.getElementById('presentation-dynamic-styles');
+            if (existingStyle) {
+                existingStyle.remove();
+            }
+
+            // Create new style element
+            var style = document.createElement('style');
+            style.id = 'presentation-dynamic-styles';
+            style.type = 'text/css';
+
+            var css = '';
+
+            // Background mode and custom background
+            css += '.screen-container { ';
+            css += 'background-size: ' + $scope.settings.backgroundMode + ' !important; ';
+            
+            if ($scope.settings.customBackgroundUrl) {
+                css += 'background-image: url("' + $scope.settings.customBackgroundUrl + '") !important; ';
+            }
+            
+
+            
+            css += '}';
+
+            style.innerHTML = css;
+            document.head.appendChild(style);
+
+            console.log('🎨 Applied presentation settings:', $scope.settings);
+        }
+
+        // Validate image file
+        function validateImageFile(file) {
+            return new Promise(function(resolve, reject) {
+                // Check file type
+                var allowedTypes = ['image/png', 'image/jpeg', 'image/webp'];
+                if (allowedTypes.indexOf(file.type) === -1) {
+                    reject(new Error('Invalid file type. Please upload PNG, JPEG, or WebP images only.'));
+                    return;
+                }
+
+                // Check file size (max 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    reject(new Error('File too large. Maximum size is 10MB.'));
+                    return;
+                }
+
+                // Check image dimensions
+                var img = new Image();
+                img.onload = function() {
+                    if (img.width < 1920 || img.height < 1080) {
+                        reject(new Error('Image too small. Minimum dimensions: 1920×1080 pixels. Your image: ' + img.width + '×' + img.height));
+                        return;
+                    }
+                    resolve({
+                        width: img.width,
+                        height: img.height,
+                        valid: true
+                    });
+                };
+                img.onerror = function() {
+                    reject(new Error('Invalid image file or corrupted.'));
+                };
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        // Handle background image upload
+        $scope.uploadBackground = function(file) {
+            if (!file) return;
+
+            $scope.isLoading = true;
+            
+            validateImageFile(file).then(function(validation) {
+                // Create data URL for the image
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $scope.settings.customBackgroundUrl = e.target.result;
+                    $scope.settings.customBackgroundName = file.name;
+                    
+                    // Auto-save when image is uploaded
+                    $scope.saveSettings();
+                    
+                    showToast('Background image uploaded successfully! (' + validation.width + '×' + validation.height + ')', 'success');
+                    $scope.$apply();
+                };
+                reader.onerror = function() {
+                    $scope.isLoading = false;
+                    showToast('Failed to read image file', 'error');
+                    $scope.$apply();
+                };
+                reader.readAsDataURL(file);
+                
+            }).catch(function(error) {
+                $scope.isLoading = false;
+                showToast('Image validation failed: ' + error.message, 'error');
+                $scope.$apply();
+            });
+        };
+
+        // Remove custom background
+        $scope.removeBackground = function() {
+            if (confirm('Remove custom background and revert to default?')) {
+                $scope.settings.customBackgroundUrl = null;
+                $scope.settings.customBackgroundName = null;
+                $scope.saveSettings();
+                showToast('Custom background removed', 'success');
+            }
+        };
+
+
+
+        // Preview settings (apply without saving)
+        $scope.previewSettings = function() {
+            applySettings();
+            showToast('Preview applied! Save to make permanent.', 'info');
+        };
+
+        // Trigger file upload
+        $scope.triggerUpload = function() {
+            document.getElementById('backgroundUpload').click();
+        };
+
+        // Utility function to show toast messages
+        function showToast(message, type) {
+            var config = {
+                template: '<md-toast><span class="md-toast-text">' + message + '</span></md-toast>',
+                hideDelay: 3000,
+                position: 'bottom right'
+            };
+            
+            $mdToast.show(config);
+        }
+
+        // Initialize
+        loadSettings();
+    });
 })();
 //create UI Button to download all of the content stored in localStorage
 (function() {

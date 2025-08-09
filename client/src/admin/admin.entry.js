@@ -19,6 +19,7 @@ import 'md-data-table';
 
 // Import admin-specific styles
 import './css/admin.css';
+import './css/presentation-settings.css';
 
 // Import shared services
 import '../services/sync.service.js';
@@ -42,6 +43,7 @@ import './services/dialog.service.js';
 import './services/entity-utils.service.js';
 import './services/presentation.service.js';
 import './services/csv-export.service.js';
+import './services/presentation-settings.service.js';
 
 // Import admin directives
 import './directives/delete-button.directive.js';

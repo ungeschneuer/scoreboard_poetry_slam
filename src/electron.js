@@ -94,7 +94,7 @@ const createAdminWindow = (display) => {
 
   adminWindow.maximize();
   adminWindow.webContents.setAudioMuted(false);
-  // adminWindow.webContents.openDevTools();
+  adminWindow.webContents.openDevTools();
   adminWindow.loadURL(`http://localhost:4200/admin.html`);
 
   adminWindow.on('close', (event) => {
@@ -151,7 +151,7 @@ const createPresentationWindow = (display) => {
 
   presentationWindow.maximize();
   presentationWindow.webContents.setAudioMuted(false);
-  // presentationWindow.webContents.openDevTools();
+  presentationWindow.webContents.openDevTools();
   
   // Simple ESC key handler for presentation window
   presentationWindow.webContents.on('before-input-event', (event, input) => {

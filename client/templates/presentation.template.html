@@ -13,7 +13,7 @@
     <!-- Critical CSS will be injected here by webpack -->
   </head>
 
-  <body ng-app="ps" class="anim-video-delay-long" ng-class="{'disable-ignored-scores': !presentation.enableIgnoredScores}" fullscreen>
+  <body ng-app="ps" class="anim-video-delay-long" ng-class="{'disable-ignored-scores': !presentation.enableIgnoredScores}" fullscreen presentation-settings>
     <div class="screen-container" id="screen-container">
       <background-video url="presentation.bgVideoUrl" delay-switch></background-video>
       <clip url="presentation.videoUrl" start-at="presentation.startVideoAt"></clip>

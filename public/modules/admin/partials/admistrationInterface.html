@@ -1,4 +1,115 @@
+<!-- Presentation Settings Section -->
 <section class="md-whiteframe-z2 admin-section">
+  <md-toolbar class="md-secondary">
+    <div class="md-toolbar-tools">
+      <h3 class="ng-binding">Presentation Settings</h3>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="previewSettings()" ng-disabled="isLoading" 
+                 aria-label="Preview Settings">
+        <md-icon md-svg-icon="content:visibility"></md-icon>
+        <md-tooltip>Preview without saving</md-tooltip>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-content class="md-padding">
+    <div ng-show="isLoading" layout="row" layout-align="center center" style="min-height: 100px;">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      <span style="margin-left: 16px;">Loading settings...</span>
+    </div>
+
+    <div ng-hide="isLoading">
+      <!-- Background Mode Setting -->
+      <div layout="column" class="setting-group">
+        <h4>Background Display Mode</h4>
+        <p class="setting-description">
+          Choose how the background image should be displayed in the presentation window.
+        </p>
+        
+        <md-radio-group ng-model="settings.backgroundMode" layout="column">
+          <md-radio-button ng-repeat="mode in backgroundModes" 
+                          ng-value="mode.value"
+                          class="md-primary">
+            {{mode.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+
+
+
+      <!-- Custom Background Image Setting -->
+      <div layout="column" class="setting-group">
+        <h4>Custom Background Image</h4>
+        <p class="setting-description">
+          Upload a custom background image for the presentation. Image must be PNG, JPEG, or WebP format with minimum dimensions of 1920×1080 pixels.
+        </p>
+
+        <!-- Current Background Display -->
+        <div ng-if="settings.customBackgroundName" 
+             class="current-background" 
+             style="margin: 16px 0; padding: 16px; background: #f5f5f5; border-radius: 4px;">
+          <div layout="row" layout-align="start center">
+            <md-icon md-svg-icon="image:photo" style="margin-right: 8px;"></md-icon>
+            <span flex>{{settings.customBackgroundName}}</span>
+            <md-button class="md-warn md-raised" ng-click="removeBackground()">
+              Remove
+            </md-button>
+          </div>
+        </div>
+
+        <!-- Upload Area -->
+        <div class="upload-area" style="border: 2px dashed #ccc; padding: 24px; text-align: center; margin: 16px 0;">
+          <input type="file" 
+                 accept="image/png,image/jpeg,image/webp" 
+                 ng-model="backgroundFile"
+                 onchange="angular.element(this).scope().uploadBackground(this.files[0])"
+                 style="display: none;" 
+                 id="backgroundUpload">
+          
+          <div ng-if="!settings.customBackgroundName">
+            <md-icon md-svg-icon="content:cloud_upload" style="font-size: 48px; margin-bottom: 16px;"></md-icon>
+            <p>Click to upload or drag and drop your background image</p>
+            <md-button class="md-primary md-raised" ng-click="triggerUpload()">
+              Choose Image
+            </md-button>
+          </div>
+          
+          <div ng-if="settings.customBackgroundName">
+            <p>Click to replace current background image</p>
+            <md-button class="md-primary" ng-click="triggerUpload()">
+              Replace Image
+            </md-button>
+          </div>
+        </div>
+
+        <div class="upload-requirements" style="font-size: 12px; color: #666; margin-top: 8px;">
+          <strong>Requirements:</strong>
+          <ul style="margin: 4px 0; padding-left: 20px;">
+            <li>File formats: PNG, JPEG, WebP</li>
+            <li>Minimum size: 1920×1080 pixels</li>
+            <li>Maximum file size: 10MB</li>
+          </ul>
+        </div>
+      </div>
+
+      <md-divider style="margin: 24px 0;"></md-divider>
+
+      <!-- Action Buttons -->
+      <div layout="row" layout-align="end center" style="margin-top: 24px;">
+        <md-button class="md-warn" ng-click="resetSettings()" ng-disabled="isLoading">
+          Reset to Defaults
+        </md-button>
+        <md-button class="md-primary md-raised" ng-click="saveSettings()" ng-disabled="isLoading">
+          <md-icon md-svg-icon="content:save"></md-icon>
+          Save Settings
+        </md-button>
+      </div>
+    </div>
+  </md-content>
+</section>
+
+<!-- Backup Section -->
+<section class="md-whiteframe-z2 admin-section" style="margin-top: 24px;">
   <md-toolbar class="md-secondary">
     <div class="md-toolbar-tools">
       <h3 class="ng-binding">Backup</h3>

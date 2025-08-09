@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Presentation Settings</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { margin: 5px; padding: 10px; }
+        .screen-container { 
+            width: 400px; 
+            height: 300px; 
+            background: url('./media-optimized/background.png') no-repeat center center;
+            background-size: cover;
+            border: 2px solid #333;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Presentation Settings</h1>
+    
+    <div class="test-section">
+        <h3>Test localStorage Settings</h3>
+        <button onclick="testSaveSettings()">Save Test Settings</button>
+        <button onclick="testLoadSettings()">Load Settings</button>
+        <button onclick="testClearSettings()">Clear Settings</button>
+        <div id="settings-display"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Background Display</h3>
+        <div class="screen-container" id="test-container"></div>
+        <button onclick="testCover()">Set to Cover</button>
+        <button onclick="testContain()">Set to Contain</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>Console Messages</h3>
+        <p>Check browser console (F12) for debug messages:</p>
+        <ul>
+            <li>🎨 Presentation Settings Handler Loaded!</li>
+            <li>🎨 Loading presentation settings: {...}</li>
+            <li>✅ Applied presentation settings to screen-container</li>
+        </ul>
+    </div>
+
+    <script>
+        // Test functions
+        function testSaveSettings() {
+            var settings = {
+                backgroundMode: 'contain',
+                customBackgroundUrl: null,
+                customBackgroundName: null
+            };
+            localStorage.setItem('presentationSettings', JSON.stringify(settings));
+            console.log('✅ Test settings saved:', settings);
+            updateSettingsDisplay();
+        }
+        
+        function testLoadSettings() {
+            var settingsStr = localStorage.getItem('presentationSettings');
+            if (settingsStr) {
+                var settings = JSON.parse(settingsStr);
+                console.log('📖 Loaded settings:', settings);
+                updateSettingsDisplay();
+            } else {
+                console.log('❌ No settings found');
+            }
+        }
+        
+        function testClearSettings() {
+            localStorage.removeItem('presentationSettings');
+            console.log('🗑️ Settings cleared');
+            updateSettingsDisplay();
+        }
+        
+        function updateSettingsDisplay() {
+            var settingsStr = localStorage.getItem('presentationSettings');
+            var display = document.getElementById('settings-display');
+            if (settingsStr) {
+                var settings = JSON.parse(settingsStr);
+                display.innerHTML = '<pre>' + JSON.stringify(settings, null, 2) + '</pre>';
+            } else {
+                display.innerHTML = '<p>No settings found</p>';
+            }
+        }
+        
+        function testCover() {
+            var container = document.getElementById('test-container');
+            container.style.backgroundSize = 'cover';
+            console.log('🎨 Set background-size: cover');
+        }
+        
+        function testContain() {
+            var container = document.getElementById('test-container');
+            container.style.backgroundSize = 'contain';
+            container.style.backgroundColor = '#000000';
+            container.style.backgroundPosition = 'center center';
+            console.log('🎨 Set background-size: contain with black bars');
+        }
+        
+
+        
+        // Load settings on page load
+        window.onload = function() {
+            updateSettingsDisplay();
+            console.log('🧪 Test page loaded - check console for messages');
+        };
+    </script>
+</body>
+</html>

@@ -33,6 +33,7 @@ import './components/rating-participant.component.js';
 import './directives/background-video.directive.js';
 import './directives/clip.directive.js';
 import './directives/odometer.directive.js';
+import './directives/presentation-settings.directive.js';
 
 // Import presentation filters (minimal set)
 import '../filters/entry-of-id.filter.js';
